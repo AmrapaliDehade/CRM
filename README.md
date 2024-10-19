@@ -1,10 +1,13 @@
 # CRM
 Customer Relationship Management (CRM) system using SQL
 ## Key Entities:
-Customer: Individuals or companies purchasing or using your services.
-Lead: Potential customers who have shown interest in your product/service but haven't yet made a purchase.
-Contact: Individuals related to either customers or leads. This can be multiple contacts per customer or lead.
-Opportunity: Sales opportunities, linked to a lead or customer, representing potential revenue.
+*Customer*: Individuals or companies purchasing or using your services.
+
+*Lead*: Potential customers who have shown interest in your product/service but haven't yet made a purchase.
+
+*Contact*: Individuals related to either customers or leads. This can be multiple contacts per customer or lead.
+
+*Opportunity*: Sales opportunities, linked to a lead or customer, representing potential revenue.
 
 I have used Trigger and Stored Procedure in this project
 
