@@ -12,17 +12,13 @@ Customer Relationship Management (CRM) system using SQL
 I have used Trigger and Stored Procedure in this project
 
 ## Trigger:
--- The trigger automatically updates the customer's status to "Converted" when the lead's status changes to "Converted."
-
+ The trigger automatically updates the customer's status to "Converted" when the lead's status changes to "Converted."
 
 CREATE TRIGGER update_customer_status_on_conversion
-AFTER UPDATE ON LeadInfo
+AFTER UPDATE ON Lead
 FOR EACH ROW
 BEGIN
-
- -- Check if the conversion_status column in LeadInfo is changed to 'Converted'
-
-    
+    -- Check if the conversion_status cloumn in leadInfo is changed to 'Converted'
     IF NEW.conversion_status = 'Converted' THEN
         -- Update the corresponding customer's status
         UPDATE Customer
@@ -30,6 +26,9 @@ BEGIN
         WHERE customer_id = NEW.customer_id;
     END IF;
 END;
+
+
+
 # Explanation:
 Trigger Name: update_customer_status_on_conversion
 Event: AFTER UPDATE ON LeadInfo means the trigger will fire after an UPDATE operation on the LeadInfo table.
