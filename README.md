@@ -13,6 +13,7 @@ I have used Trigger and Stored Procedure in this project
 
 ## Trigger:
  The trigger automatically updates the customer's status to "Converted" when the lead's status changes to "Converted."
+ 
 
 CREATE TRIGGER update_customer_status_on_conversion
 AFTER UPDATE ON Lead
@@ -26,6 +27,7 @@ BEGIN
         WHERE customer_id = NEW.customer_id;
     END IF;
 END;
+
 
 
 
