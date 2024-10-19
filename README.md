@@ -20,7 +20,7 @@ AFTER UPDATE ON LeadInfo
 FOR EACH ROW
 BEGIN
 
-    -- Check if the conversion_status column in LeadInfo is changed to 'Converted'
+ -- Check if the conversion_status column in LeadInfo is changed to 'Converted'
 
     
     IF NEW.conversion_status = 'Converted' THEN
