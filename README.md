@@ -15,37 +15,67 @@ I have used Trigger and Stored Procedure in this project
  The trigger automatically updates the customer's status to "Converted" when the lead's status changes to "Converted."
  
 
-CREATE TRIGGER update_customer_status_on_conversion
+```sql
+CREATE TRIGGER update_customer_status_on_conversion 
 AFTER UPDATE ON Lead
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
-    -- Check if the conversion_status cloumn in leadInfo is changed to 'Converted'
+    -- Check if the conversion_status column in leadInfo is changed to 'Converted'
     IF NEW.conversion_status = 'Converted' THEN
         -- Update the corresponding customer's status
-        UPDATE Customer
+        UPDATE Customer 
         SET status = 'Converted'
         WHERE customer_id = NEW.customer_id;
     END IF;
 END;
-
+```
 
 
 
 # Explanation:
 Trigger Name: update_customer_status_on_conversion
+
 Event: AFTER UPDATE ON LeadInfo means the trigger will fire after an UPDATE operation on the LeadInfo table.
+
 Condition: It checks if the conversion_status column is set to 'Converted'.
+
 Action: If the condition is true, it updates the corresponding Customer record's status to 'Converted'.
+
+# FYI
+
+`NEW` keyword:
+
+`NEW.conversion_status = 'Converted'`:
+
+`NEW` refers to the new (updated) row in the Lead table after the UPDATE operation.
+
+`conversion_status` is a column in the Lead table.
+
+This condition checks if the `conversion_status` column of the updated row has been set to 'Converted'.
+
+It's used to determine whether the trigger should proceed with updating the Customer table.
+
+`customer_id = NEW.customer_id`:
+This is part of the WHERE clause in the UPDATE statement for the Customer table.
+
+`customer_id` refers to the column in the Customer table.
+
+`NEW.customer_id` refers to the `customer_id` column value in the updated Lead row.
+
+This condition ensures that only the customer record associated with the updated lead is modified.
 # Testing the trigger
+```sql
 UPDATE LeadInfo
 SET conversion_status = 'Converted'
 WHERE lead_id = 1;
-
+```
 -- Check the customer's status
+```sql
 SELECT * FROM Customer WHERE customer_id = 1;
-
+```
 ## Stored Procedure
 -- Using Stored Procedure to update fields in the same table 
+```sql
 DELIMITER $$
 
 CREATE PROCEDURE update_lead_status(
@@ -63,11 +93,14 @@ BEGIN
     WHERE lead_id = p_lead_id;
 END $$
 DELIMITER ;
+```
 # Explanation
 conversion_status = CASE:
+
 This part starts a CASE statement, which is used for conditional logic inside SQL queries. It allows us to set conversion_status based on the value of p_status.
 
 WHEN p_status = 'Contacted' THEN 'Qualified':
+
 Here, the CASE checks if the value of the input parameter p_status (passed when the stored procedure is called) is equal to 'Contacted'.
 
 If p_status is 'Contacted': Then, the conversion_status column will be updated to 'Qualified'.
@@ -84,10 +117,18 @@ This part of the code specifies which record(s) in the LeadInfo table to update.
 The update will only be applied to the row where lead_id equals p_lead_id, which is the ID passed as an input parameter when calling the stored procedure.
 
 # Call Stored Procedure
+```sql
 CALL update_lead_status(4, 'Contacted');
--- Explanation:
-p_lead_id = 4: So, we are targeting the row in LeadInfo where lead_id = 4.
-p_status = 'Contacted': Since p_status is 'Contacted', the CASE statement will trigger the THEN clause, updating conversion_status to 'Qualified'.
+```
+ Explanation:
+
+p_lead_id = 4: 
+
+So, we are targeting the row in LeadInfo where lead_id = 4.
+
+p_status = 'Contacted': 
+
+Since p_status is 'Contacted', the CASE statement will trigger the THEN clause, updating conversion_status to 'Qualified'.
 # Summary
 The CASE statement allows you to conditionally update conversion_status.
 If p_status is 'Contacted', the conversion_status is set to 'Qualified'.
