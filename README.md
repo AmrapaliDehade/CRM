@@ -19,7 +19,10 @@ CREATE TRIGGER update_customer_status_on_conversion
 AFTER UPDATE ON LeadInfo
 FOR EACH ROW
 BEGIN
+
     -- Check if the conversion_status column in LeadInfo is changed to 'Converted'
+
+    
     IF NEW.conversion_status = 'Converted' THEN
         -- Update the corresponding customer's status
         UPDATE Customer
